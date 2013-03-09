@@ -1,0 +1,14 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>de.it-hempel</groupId>
+  <artifactId>ms4j</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>Manage Sieve for Java</name>
+  <url>https://github.com/ithempel/ms4j</url>
+  <description>Implementation of the ManageSieve protocol ([RFC 5804](http://www.ietf.org/rfc/rfc5804.txt))
+as a java library (JAR).</description>
+  <organization>
+  	<name>IT-Consulting Hempel</name>
+  	<url>http://www.it-hempel.de/</url>
+  </organization>
+</project>

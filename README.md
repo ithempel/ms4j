@@ -1,4 +1,4 @@
-# manage-sieve
+# ms4j - Manage Sieve for Java
 
 ## Purpose
 
