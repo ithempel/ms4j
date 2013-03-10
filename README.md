@@ -7,4 +7,31 @@ as a java library (JAR). The protocol is used to manage sieve scripts - create, 
 (de-)activate - on servers using the Sieve script language to filter mails.
 
 The goal of this project is to implement the client part of the protocol in java. The library
-can be used to access a IMAP server for managing the sieve scripts of a user.
+can be used to access an IMAP server for managing the sieve scripts of a user.
+
+## Work in Progress
+
+Further information about the library and its usage will be published at this place. For
+now only the first steps of the implementation are known.
+
+The first steps will be to implement the following functions:
+
+ * Connect to a server with plain password authentication
+ * Get the list of scripts
+ * Activate and Deactivate a script
+ * Upload a new script to the server
+
+## License
+
+ms4j is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+ms4j is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
