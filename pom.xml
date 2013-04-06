@@ -3,12 +3,37 @@
   <groupId>de.it-hempel</groupId>
   <artifactId>ms4j</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>Manage Sieve for Java</name>
+  <name>ms4j</name>
   <url>https://github.com/ithempel/ms4j</url>
-  <description>Implementation of the ManageSieve protocol ([RFC 5804](http://www.ietf.org/rfc/rfc5804.txt))
+  <description>Implementation of the ManageSieve protocol RFC 5804 (http://www.ietf.org/rfc/rfc5804.txt)
 as a java library (JAR).</description>
   <organization>
   	<name>IT-Consulting Hempel</name>
   	<url>http://www.it-hempel.de/</url>
   </organization>
+  <issueManagement>
+  	<url>https://github.com/ithempel/ms4j/issues</url>
+  	<system>GitHub</system>
+  </issueManagement>
+  <build>
+    <plugins>
+    	<plugin>
+    		<groupId>org.apache.maven.plugins</groupId>
+    		<artifactId>maven-compiler-plugin</artifactId>
+    		<version>3.0</version>
+    		<configuration>
+    		  <source>1.6</source>
+    		  <target>1.6</target>
+    		</configuration>
+    	</plugin>
+    </plugins>
+  </build>
+  <dependencies>
+  <dependency>
+  	<groupId>junit</groupId>
+  	<artifactId>junit</artifactId>
+  	<version>4.11</version>
+  	<scope>test</scope>
+  </dependency>
+  </dependencies>
 </project>
