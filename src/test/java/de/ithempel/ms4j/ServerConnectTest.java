@@ -23,8 +23,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.net.UnknownHostException;
+import java.util.concurrent.TimeoutException;
 
 import org.junit.Test;
 
@@ -35,16 +37,20 @@ import org.junit.Test;
  */
 public class ServerConnectTest {
 
+	private static final String TEST_SERVER = "zeus.olymp.local";
+
 	@Test
 	public void noConnection_openConnection_hasConnection() throws UnknownHostException {
-		Connection connection = new Connection("zeus.olymp.local");
+		Connection connection = new Connection(TEST_SERVER);
 
 		assertThat(connection.isConnected(), is(Boolean.TRUE));
+
+		connection.close();
 	}
 
 	@Test
 	public void hasConnection_closeConnection_hasNoConnection() throws UnknownHostException {
-		Connection connection = new Connection("zeus.olymp.local");
+		Connection connection = new Connection(TEST_SERVER);
 
 		connection.close();
 
@@ -57,8 +63,8 @@ public class ServerConnectTest {
 	}
 
 	@Test
-	public void noConnection_openConnection_getInitalResponse() throws UnknownHostException {
-		Connection connection = new Connection("zeus.olymp.local");
+	public void noConnection_openConnection_getInitalResponse() throws UnknownHostException, TimeoutException {
+		Connection connection = new Connection(TEST_SERVER);
 
 		String[] response = connection.getResponse();
 		connection.close();
@@ -67,14 +73,24 @@ public class ServerConnectTest {
 	}
 
 	@Test
-	public void openConnection_getInitialResponse_ResultOK() throws UnknownHostException {
-		Connection connection = new Connection("zeus.olymp.local");
+	public void openConnection_getInitialResponse_ResultOK() throws UnknownHostException, TimeoutException {
+		Connection connection = new Connection(TEST_SERVER);
 		String[] response = connection.getResponse();
 		connection.close();
 
 		String lastLine = response[response.length - 1];
 
 		assertThat(lastLine, startsWith("OK"));
+	}
+
+	@Test(expected=TimeoutException.class)
+	public void openConnection_getSomeThinAfterInitialResponse_TimeoutException() throws UnknownHostException, TimeoutException {
+		Connection connection = new Connection(TEST_SERVER);
+		connection.getResponse();
+
+		connection.getResponse();
+
+		fail("got something after initial response");
 	}
 
 }

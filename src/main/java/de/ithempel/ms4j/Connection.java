@@ -26,12 +26,18 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 public class Connection {
 
 	private static final int MANAGE_SIEVE_DEFAULT_PORT = 2000;
 
+	private static final int WAIT_INTERVALL_IN_MS = 30;
+	private static final int INTERVALLS_TO_WAIT = 10;
+
 	private Socket socket;
+
+	private BufferedReader inputReader;
 
 	public Connection(String host) throws UnknownHostException {
 		this(host, MANAGE_SIEVE_DEFAULT_PORT);
@@ -41,6 +47,8 @@ public class Connection {
 		try {
 			InetAddress address = InetAddress.getByName(host);
 			socket = new Socket(address, port);
+
+			inputReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		} catch (UnknownHostException e) {
 			throw e;
 		} catch (IOException e) {
@@ -51,6 +59,9 @@ public class Connection {
 
 	public void close() {
 		try {
+			inputReader.close();
+			socket.shutdownInput();
+
 			socket.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -62,11 +73,11 @@ public class Connection {
 		return !socket.isClosed() && socket.isConnected();
 	}
 
-	public String[] getResponse() {
+	public String[] getResponse() throws TimeoutException {
 		List<String> responseBuffer = new LinkedList<String>();
 
 		try {
-			BufferedReader inputReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			waitForServer();
 			while (inputReader.ready()) {
 				String line = inputReader.readLine();
 				responseBuffer.add(line);
@@ -77,6 +88,24 @@ public class Connection {
 		}
 
 		return responseBuffer.toArray(new String[0]);
+	}
+
+	private void waitForServer() throws IOException, TimeoutException {
+		int retries = INTERVALLS_TO_WAIT;
+		while (!inputReader.ready() && retries > 0) {
+			try {
+				Thread.sleep(WAIT_INTERVALL_IN_MS);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			retries--;
+		}
+
+		if (retries == 0) {
+			throw new TimeoutException("no response from server");
+		}
 	}
 
 }
