@@ -59,7 +59,6 @@ public class Connection {
 
 	public void close() {
 		try {
-			inputReader.close();
 			socket.shutdownInput();
 
 			socket.close();
