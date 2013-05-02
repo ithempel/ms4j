@@ -84,7 +84,7 @@ public class ServerConnectTest {
 	}
 
 	@Test(expected=TimeoutException.class)
-	public void openConnection_getSomeThinAfterInitialResponse_TimeoutException() throws UnknownHostException, TimeoutException {
+	public void openConnection_getSomeThingAfterInitialResponse_TimeoutException() throws UnknownHostException, TimeoutException {
 		Connection connection = new Connection(TEST_SERVER);
 		connection.getResponse();
 
